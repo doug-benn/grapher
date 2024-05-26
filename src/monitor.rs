@@ -15,8 +15,12 @@ impl Monitor {
     }
   }
 
-  pub fn max_value(&mut self) {
-    let max = self.values.iter().max();
+  pub fn max_value(&mut self) -> f64 {
+        match self.values.len() {
+            0 => 0.0,
+            n => self.values[n-1].clone().x
+    }
+    //self.values.iter().last().unwrap().x
   }
 
   pub fn append_value(&mut self, plot_point: PlotPoint){
@@ -29,6 +33,7 @@ impl Monitor {
  }
 
   pub fn append_str(&mut self, input_string: &str) {
+    //println!("{}", input_string);
     let parts = input_string.split(' ').collect::<Vec<&str>>();
 
     if parts.len() != 2 {

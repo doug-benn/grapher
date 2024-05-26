@@ -1,3 +1,5 @@
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
+
 mod monitor;
 
 use std::{io::BufRead, sync::Arc, thread};
@@ -25,18 +27,27 @@ impl App {
 impl eframe::App for App {
     fn update(&mut self, ctx: &egui::Context, _: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui|{
-            let plot = Plot::new("measurements").allow_drag(Vec2b::new(true, false));
+            let plot = Plot::new("measurements");//.allow_drag(Vec2b::new(true, false));
             plot.show(ui, |plot_ui| {
                 plot_ui.line(Line::new(self.monitor.lock().get_values()
                 ));
-                if self.first_draw {
-                    self.first_draw = false;
-                    plot_ui.set_plot_bounds(PlotBounds::from_min_max(
-                            [0.0, 0.0],
-                            [1000.0, 20.0],
-                        ));}
-                plot_ui.set_auto_bounds(Vec2b::new(false, true));
-                plot_ui.translate_bounds(Vec2::new(1.0, 0.0))
+                // if self.first_draw {
+                //     self.first_draw = false;
+                //     plot_ui.set_plot_bounds(PlotBounds::from_min_max(
+                //             [0.0, 0.0],
+                //             [100.0, 10.0],
+                //         ));}
+                // else {
+                //     println!("{}", self.monitor.lock().max_value());
+                //     //plot_ui.plot_bounds.extend_with_x(self.monitor.lock().max_value())
+                //     //plot_ui.plot_bounds().extend_with_x(self.monitor.lock().max_value())
+                // }
+                //plot_ui.plot_bounds().extend_with_x(self.monitor.lock().max_value());
+                //plot_ui.set_auto_bounds(Vec2b::new(true, true));
+                //plot_ui.translate_bounds(Vec2::new(1.0, 0.0))
+                println!("{:?}", plot_ui.plot_bounds().max())
+                //Use the max to create a windowing affect - max - window size, translate that difference
+                
             })
         });
         ctx.request_repaint();
@@ -60,6 +71,7 @@ fn main() -> Result<(), eframe::Error> {
             }
         }
     });
+
 
     let options = eframe::NativeOptions::default();
     eframe::run_native(
