@@ -31,24 +31,27 @@ impl eframe::App for App {
             plot.show(ui, |plot_ui| {
                 plot_ui.line(Line::new(self.monitor.lock().get_values()
                 ));
-                // if self.first_draw {
-                //     self.first_draw = false;
-                //     plot_ui.set_plot_bounds(PlotBounds::from_min_max(
-                //             [0.0, 0.0],
-                //             [100.0, 10.0],
-                //         ));}
-                // else {
-                //     println!("{}", self.monitor.lock().max_value());
-                //     //plot_ui.plot_bounds.extend_with_x(self.monitor.lock().max_value())
-                //     //plot_ui.plot_bounds().extend_with_x(self.monitor.lock().max_value())
-                // }
+                if self.first_draw {
+                    self.first_draw = false;
+                    plot_ui.set_plot_bounds(PlotBounds::from_min_max(
+                            [0.0, 0.0],
+                            [100.0, 10.0],
+                        ));}
+
+                //plot_ui.plot_bounds.extend_with_x(self.monitor.lock().max_value())
+                //plot_ui.plot_bounds().extend_with_x(self.monitor.lock().max_value())
                 //plot_ui.plot_bounds().extend_with_x(self.monitor.lock().max_value());
-                //plot_ui.set_auto_bounds(Vec2b::new(true, true));
-                //plot_ui.translate_bounds(Vec2::new(1.0, 0.0))
-                println!("{:?}", plot_ui.plot_bounds().max())
+                plot_ui.translate_bounds(Vec2 { x: 2.0, y: 0.0 });
+                plot_ui.set_auto_bounds(Vec2b::new(true, true));
+                //plot_ui.translate_bounds(Vec2::new(1.0, 0.0));
+                
+                //println!("Max Bound {:?} Max X {:?}", plot_ui.plot_bounds().width(), self.monitor.lock().max_value());
+                //plot_ui.translate_bounds(Vec2 { x: 2.0, y: 0.0 });
+                //plot_ui.plot_bounds().translate_x(2.0)
                 //Use the max to create a windowing affect - max - window size, translate that difference
                 
             })
+
         });
         ctx.request_repaint();
     }
