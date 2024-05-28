@@ -1,14 +1,21 @@
 import random
 import time
 
-for i in range(1000):
-    print(f"{i} {random.randint(0,10)}")
-    time.sleep(0.01)
+index = 0
+randmod = 10
+while True:
+    index += 1
 
-for i in range(1000):
-    print(f"{i+1000} {random.randint(0,100)}")
-    time.sleep(0.01)
+    if index % 10 == 0:
+        randmod += 5
 
-for i in range(1000):
-    print(f"{i+2000} {random.randint(0,1000)}")
-    time.sleep(0.01)
+    print(f"{index} {random.randint(0,randmod)}")
+    time.sleep(0.1)
+
+    # for i in range(500):
+    #     print(f"{index} {random.randint(0,100)}")
+    #     time.sleep(0.01)
+
+    # for i in range(500):
+    #     print(f"{index} {random.randint(0,1000)}")
+    #     time.sleep(0.01)
