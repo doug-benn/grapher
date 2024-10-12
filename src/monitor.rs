@@ -1,4 +1,4 @@
-use std::collections::VecDeque;
+use std::collections::{HashMap, VecDeque};
 
 use egui_plot::{PlotPoint, PlotPoints};
 
@@ -56,18 +56,18 @@ impl Monitor {
             }
         };
 
-        self.append_value(PlotPoint { x: x, y: y })
+        self.append_value(PlotPoint { x, y })
     }
 }
 
-// pub struct Testing {
-//     pub test_monitor: PlotPoints,
-// }
+pub struct SensorReading {
+    pub sensor_reading: HashMap<String, PlotPoints>,
+}
 
-// impl Testing {
-//     pub fn new() -> Self {
-//         Self {
-//             test_monitor: PlotPoints::default(),
-//         }
-//     }
-// }
+impl SensorReading {
+    pub fn new() -> Self {
+        Self {
+            sensor_reading: HashMap::new(),
+        }
+    }
+}

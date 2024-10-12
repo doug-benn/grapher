@@ -2,22 +2,24 @@
 
 mod monitor;
 
-use std::{net::UdpSocket, sync::Arc, thread};
-
 use eframe::egui;
 use egui::{mutex::Mutex, Vec2, Vec2b};
 use egui_plot::{Line, Plot, PlotBounds};
-use monitor::Monitor;
+use monitor::{Monitor, SensorReading};
+use std::{net::UdpSocket, sync::Arc, thread};
 
 struct App {
     monitor: Arc<Mutex<Monitor>>,
     first_draw: bool,
+    sensor_readings: Arc<Mutex<SensorReading>>,
 }
+
 impl App {
     fn new(window_size: f64) -> Self {
         Self {
             monitor: Arc::new(Mutex::new(Monitor::new(window_size))),
             first_draw: true,
+            sensor_readings: Arc::new(Mutex::new(SensorReading::new())),
         }
     }
 }
